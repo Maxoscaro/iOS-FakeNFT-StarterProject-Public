@@ -23,6 +23,8 @@ final class CartViewViewModel: ObservableObject {
     @Published var order: Order?
     @Published var currentSortType: CartSortType = .name
     @Published var state: LoadingState<[Nft]> = .loading
+    @Published var showDeleteConfirmation = false
+    @Published var nftToDelete: Nft?
     
     
     // MARK: - Services
@@ -73,23 +75,23 @@ final class CartViewViewModel: ObservableObject {
     }
     
     func loadCart() async {
-            state = .loading
-            do {
-                order = try await orderService.getOrder()
-                let nftIds = order?.nfts ?? []
-                cartItems = []
-                
-                for nftId in nftIds {
-                    let nft = try await nftService.getNFT(id: nftId)
-                    cartItems.append(nft)
-                }
-
-                state = cartItems.isEmpty ? .empty : .loaded(cartItems)
-                
-            } catch {
-                state = .error(error.localizedDescription)
+        state = .loading
+        do {
+            order = try await orderService.getOrder()
+            let nftIds = order?.nfts ?? []
+            cartItems = []
+            
+            for nftId in nftIds {
+                let nft = try await nftService.getNFT(id: nftId)
+                cartItems.append(nft)
             }
+            
+            state = cartItems.isEmpty ? .empty : .loaded(cartItems)
+            
+        } catch {
+            state = .error(error.localizedDescription)
         }
+    }
     
     
     func removeFromCart(_ nft: Nft) {
