@@ -34,6 +34,7 @@
 		505B25142DFCA6A1001FE06C /* NftsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B25132DFCA6A1001FE06C /* NftsButton.swift */; };
 		505B25162DFCA987001FE06C /* AboutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B25152DFCA987001FE06C /* AboutButton.swift */; };
 		505B25182DFD73E3001FE06C /* FullScreenModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B25172DFD73E3001FE06C /* FullScreenModalView.swift */; };
+		509718132E05866000C847F2 /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 509718122E05866000C847F2 /* SFProText-Regular.ttf */; };
 		509EF9782E016D0400E67749 /* UserNft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509EF9772E016D0400E67749 /* UserNft.swift */; };
 		509EF97A2E016D1C00E67749 /* Favourites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509EF9792E016D1C00E67749 /* Favourites.swift */; };
 		509EF9822E016F5100E67749 /* AboutUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509EF9812E016F5100E67749 /* AboutUser.swift */; };
@@ -123,6 +124,7 @@
 		505B25132DFCA6A1001FE06C /* NftsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftsButton.swift; sourceTree = "<group>"; };
 		505B25152DFCA987001FE06C /* AboutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutButton.swift; sourceTree = "<group>"; };
 		505B25172DFD73E3001FE06C /* FullScreenModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenModalView.swift; sourceTree = "<group>"; };
+		509718122E05866000C847F2 /* SFProText-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.ttf"; sourceTree = "<group>"; };
 		509EF9772E016D0400E67749 /* UserNft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNft.swift; sourceTree = "<group>"; };
 		509EF9792E016D1C00E67749 /* Favourites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favourites.swift; sourceTree = "<group>"; };
 		509EF9812E016F5100E67749 /* AboutUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUser.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			children = (
 				3F478ECE29DB474E00F6D39E /* Colors.swift */,
 				3F478ED029DB476500F6D39E /* Fonts.swift */,
+				509718122E05866000C847F2 /* SFProText-Regular.ttf */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -637,6 +640,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50160EAF2DF84E6700D6A608 /* Profile.md in Resources */,
+				509718132E05866000C847F2 /* SFProText-Regular.ttf in Resources */,
 				E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 				793BCC942DEEF47200DF1252 /* CartAnisimov.md in Resources */,

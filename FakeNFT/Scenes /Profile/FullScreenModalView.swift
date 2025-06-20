@@ -20,14 +20,15 @@ struct FullScreenModalView: View {
     var body: some View {
         HStack{
             Spacer()
-            Button("", systemImage: "plus") {
+            Button("", systemImage: "xmark") {
                 UserDefaults.standard.set(description, forKey: "description")
                 UserDefaults.standard.set(name, forKey: "name")
                 UserDefaults.standard.set(link, forKey: "link")
                 presentationMode.wrappedValue.dismiss()
             }
-            .rotationEffect(Angle(degrees: 45))
             .foregroundStyle(Color.blackDay)
+            .frame(width: 45, height: 45)
+            .font(.system(size: 19, weight: .bold))
             
         }
         VStack(spacing: 20){
