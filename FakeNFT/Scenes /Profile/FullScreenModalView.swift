@@ -11,18 +11,15 @@ struct FullScreenModalView: View {
    
 
     @Environment(\.presentationMode) var presentationMode
-    @State var description: String = ""
-    @State var name: String = ""
-    @State var link: String = ""
-    @State private var selectedItem: PhotosPickerItem? = nil
-    @AppStorage("savedImage") private var imageData: Data?
+   
+    var viewModel: FullSrceenModalViewModel
    
     var body: some View {
         HStack{
             Spacer()
             Button("", systemImage: "xmark") {
-                UserDefaults.standard.set(description, forKey: "description")
-                UserDefaults.standard.set(name, forKey: "name")
+                UserDefaults.standard.set(viewModel.model.description, forKey: "description")
+                UserDefaults.standard.set(viewModel.model.name, forKey: "name")
                 UserDefaults.standard.set(link, forKey: "link")
                 presentationMode.wrappedValue.dismiss()
             }
@@ -33,8 +30,8 @@ struct FullScreenModalView: View {
         }
         VStack(spacing: 20){
             ZStack(alignment: .center){
-                if let data = imageData, let uiImage = UIImage(data: data){
-                    PhotosPicker(selection: $selectedItem, matching: .images)
+                if let data = viewModel.imageData, let uiImage = UIImage(data: data){
+                    PhotosPicker(selection: viewModel.$selectedItem, matching: .images)
                     {
                         Image(uiImage: uiImage)
                             .resizable()
@@ -61,10 +58,10 @@ struct FullScreenModalView: View {
             
         }
         .navigationTitle("Выбор изображения")
-        .onChange(of: selectedItem) { newItem in
+        .onChange(of: viewModel.selectedItem ?? nil) { newItem in
             Task{
                 if let data = try? await newItem?.loadTransferable(type: Data.self){
-                    imageData = data
+                    viewModel.imageData = data
                 }
             }
             
@@ -79,7 +76,7 @@ struct FullScreenModalView: View {
                 .foregroundColor(Color.blackDay)
                 .padding(.leading)
             ZStack{
-                TextField(name, text: $name)
+                TextField(viewModel.model.name, text: viewModel.model.$name)
                      .padding()
                      .background(Color.gray.opacity(0.1))
                      .cornerRadius(8)
@@ -91,7 +88,7 @@ struct FullScreenModalView: View {
                 .foregroundColor(Color.blackDay)
                 .padding(.leading)
             ZStack{
-                TextField(description, text: $description)
+                TextField(viewModel.model.description, text: viewModel.model.$description)
                      .padding()
                      .background(Color.gray.opacity(0.1))
                      .cornerRadius(8)
@@ -103,7 +100,7 @@ struct FullScreenModalView: View {
                 .foregroundColor(Color.blackDay)
                 .padding(.leading)
             ZStack{
-                TextField(link, text: $link)
+                TextField(viewModel.link, text: viewModel.$link)
                      .padding()
                      .background(Color.gray.opacity(0.1))
                      .cornerRadius(8)
@@ -122,5 +119,5 @@ struct FullScreenModalView: View {
 }
 
 #Preview {
-    FullScreenModalView()
+    FullScreenModalView(viewModel: FullSrceenModalViewModel.init(model: FullScreenModalModel.init(name: "", description: "", link: "")))
 }
