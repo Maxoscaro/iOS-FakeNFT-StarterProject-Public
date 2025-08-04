@@ -12,10 +12,14 @@ struct UserNFT: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     @State private var showSortSheet = false
     
-    
     var body: some View {
         NavigationView{
-            if viewModel.nfts.isEmpty{
+            if viewModel.isLoading {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .tint(.gray)
+            }
+           else if viewModel.nfts.isEmpty{
                 Text("У вас еще нет NFT")
                     .font(.custom("SFProText-Bold", size: 17))
                 
@@ -24,14 +28,9 @@ struct UserNFT: View {
                     LazyVStack(spacing: 12){
                         ForEach(viewModel.nfts) { nft in
                             NFTCardView(nft: nft)
-                            
                         }
-                        
                     }
                 }
-                
-                
-
             }
         }
         .navigationBarBackButtonHidden(true)

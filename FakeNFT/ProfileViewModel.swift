@@ -19,6 +19,7 @@ final class ProfileViewModel: ObservableObject {
     @Published var nfts: [Nft] = []
     @Published var favoritesNfts: [Nft] = []
     @Published var imageData: Data?
+    @Published var isLoading: Bool = false
 
     
     enum SortOption: String, CaseIterable, Identifiable {
@@ -70,6 +71,8 @@ final class ProfileViewModel: ObservableObject {
         }
     
     func fetchProfile() async  {
+        isLoading = true
+        
         await profileService.fetchProfile { [weak self] result in
             guard let self else { return }
             
@@ -80,14 +83,19 @@ final class ProfileViewModel: ObservableObject {
                 self.description = fetchedProfile.description ?? ""
                 self.link = fetchedProfile.website
                 
+                // Основные NFT загружаем только один раз
                 if !didLoadNFTs {
                     fetchOwnNfts(fetchedProfile.nfts)
-                    fetchFavoritesNfts(fetchedProfile.likes)
                     didLoadNFTs = true
                 }
                 
+                // Избранные NFT всегда обновляем с сервера
+                self.favoritesNfts.removeAll()
+                fetchFavoritesNfts(fetchedProfile.likes)
+                
             case .failure(let error):
                 print("Ошибка загрузки профиля: \(error.localizedDescription)")
+                self.isLoading = false
             }
         }
     }
@@ -97,30 +105,40 @@ final class ProfileViewModel: ObservableObject {
     }
     
     func toggleLike(for nft: Nft) {
-        print("nachalo: \(userLikes.likes.count)")
+        // Сначала обновляем локальный массив
+        if let index = self.favoritesNfts.firstIndex(of: nft) {
+            self.favoritesNfts.remove(at: index)
+        } else {
+            self.favoritesNfts.append(nft)
+        }
+        
+        // Затем синхронизируем с сервером
         userLikes = UserLikes(likes: favoritesNfts.map { $0.id })
-        print("loaded: \(userLikes.likes.count)")
+        print("Отправляем на сервер: \(userLikes.likes.count) лайков")
         
         likesService.updateLikes(likes: userLikes) {[weak self] result in
             guard let self else { return }
             
             switch result {
             case .success:
-                if let index = self.favoritesNfts.firstIndex(of: nft) {
-                    self.favoritesNfts.remove(at: index)
-                } else {
-                    self.favoritesNfts.append(nft)
-                }
-                print("SUCCESS: \(self.userLikes.likes.count)")
-                break
+                print("SUCCESS: лайки обновлены на сервере")
             case .failure(let error):
                 print("Ошибка при обновлении лайков: \(error.localizedDescription)")
-                print("ERROR: \(self.userLikes.likes.count)")
+                // В случае ошибки можно откатить изменения
+                // или показать пользователю сообщение об ошибке
             }
         }
     }
     
     private func fetchOwnNfts(_ nftIds: [String]) {
+        if nftIds.isEmpty {
+            isLoading = false
+            return
+        }
+        
+        var loadedCount = 0
+        let totalCount = nftIds.count
+        
         nftIds.forEach { id in
             nftsService.loadNft(id: id) {
                 switch $0 {
@@ -130,11 +148,23 @@ final class ProfileViewModel: ObservableObject {
                 case .failure(let error):
                     print("Ошибка загрузки NFT: \(error.localizedDescription)")
                 }
+                
+                loadedCount += 1
+                if loadedCount == totalCount {
+                    self.isLoading = false
+                }
             }
         }
     }
     
     private func fetchFavoritesNfts(_ nftIds: [String]) {
+        if nftIds.isEmpty {
+            return
+        }
+        
+        var loadedCount = 0
+        let totalCount = nftIds.count
+        
         nftIds.forEach { id in
             nftsService.loadNft(id: id) {
                 switch $0 {
@@ -143,6 +173,11 @@ final class ProfileViewModel: ObservableObject {
                     
                 case .failure(let error):
                     print("Ошибка загрузки NFT: \(error.localizedDescription)")
+                }
+                
+                loadedCount += 1
+                if loadedCount == totalCount {
+                    self.isLoading = false
                 }
             }
         }

@@ -38,8 +38,6 @@ struct ProfileView: View {
                        FullScreenModalView(viewModel: viewModel)
                         
                     }
-                    
-                    
                 }
                 
                 userInfo
@@ -84,14 +82,7 @@ struct ProfileView: View {
         
         
         HStack() {
-//            AsyncImage(url: URL(string: viewModel.avatar)) { image in
-//                image.resizable()
-//            } placeholder: {
-//                ProgressView()
-//            }
-////            .frame(width: 120,height: 120)
-//            .frame(width: 70, height: 70)
-//            .clipShape(.circle)
+
             if let data = viewModel.imageData, let uiImage = UIImage(data: data) {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -117,12 +108,10 @@ struct ProfileView: View {
             Spacer()
         }
         
-        
-        
     }
     
 }
 
 #Preview {
-//    ProfileView(profileService: ProfileServiceImpl(networkClient: DefaultNetworkClient()))
+
 }
