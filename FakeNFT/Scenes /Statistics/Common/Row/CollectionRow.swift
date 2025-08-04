@@ -26,15 +26,18 @@ struct CollectionRow: View {
     // MARK: - View
     
     private var content: some View {
-        VStack(spacing: .zero) {
-            image
-            ratingView
-                .padding(.top, StatisticsConstants.anchorSmall)
-            nftInfo
-                .padding(.top, StatisticsConstants.rowAnchorSmall)
-                .padding(.bottom, StatisticsConstants.rowAnchorMedium)
+        HStack() {
+            VStack(spacing: .zero) {
+                       image
+                       ratingView
+                           .padding(.top, StatisticsConstants.anchorSmall)
+                       nftInfo
+                           .padding(.top, StatisticsConstants.rowAnchorSmall)
+                           .padding(.bottom, StatisticsConstants.rowAnchorMedium)
+                   }
+                   .frame(width: StatisticsConstants.collectionRowSize)
         }
-        .frame(width: StatisticsConstants.collectionRowSize)
+       
     }
     
     private var image: some View {
@@ -64,7 +67,7 @@ struct CollectionRow: View {
             HStack {
                 Spacer()
                 Button {
-                    likeTapHandler(nft)
+                   // likeTapHandler(nft)
                 } label: {
                     Image(userLikes.likes.contains(nft.id) ? "likeActive" : "likeNoActive")
                 }
@@ -93,7 +96,7 @@ struct CollectionRow: View {
             .foregroundStyle(Color.blackDay)
             Spacer()
             Button {
-                cartTapHandler(nft)
+              //  cartTapHandler(nft)
             } label: {
                 Image(userOrders.nfts.contains(nft.id) ? "cartDelete" : "cartAdd")
             }
