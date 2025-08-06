@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Nft: Identifiable, Hashable, Codable, Equatable {
+struct Nft: Identifiable, Hashable, Codable {
     let id: String
     let name: String
     let images: [String]

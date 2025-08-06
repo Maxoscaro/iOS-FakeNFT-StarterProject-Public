@@ -1,21 +1,18 @@
 //
-//  FavouriteNft.swift
+//  NftRow.swift
 //  FakeNFT
 //
-//  Created by Mac on 19.06.2025.
+//  Created by Mac on 18.06.2025.
 //
 
 import SwiftUI
 
-struct FavouriteNft: View {
+struct NftRow: View {
     
     // MARK: - Properties
-    let name: String
+   
     let nft: NftInfo
-    let userLikes: UserLikes
-    let userOrders: UserOrders
-    var likeTapHandler: (NftInfo) -> Void
-    var cartTapHandler: (NftInfo) -> Void
+
     
     // MARK: - Content
     
@@ -23,7 +20,7 @@ struct FavouriteNft: View {
         HStack(){
            
                 image
-                .frame(width: 80)
+                .frame(width: 109)
                 
             
             
@@ -31,6 +28,19 @@ struct FavouriteNft: View {
                 
                     ratingView
                     .padding()
+                Spacer()
+                VStack(alignment: .leading){
+                    Text("Цена")
+                    
+                    Text("\(nft.price, specifier: "%.2f") ETH")
+                        .font(.headline)
+                }
+                .padding()
+                
+                
+                
+                
+                
         
             }
             
@@ -60,8 +70,8 @@ struct FavouriteNft: View {
                     RoundedRectangle(cornerRadius: StatisticsConstants.cornerRadiusSmall)
                         .fill(Color.lightGrayDay)
                         .frame(
-                            width: 100,
-                            height: 100
+                            width: StatisticsConstants.collectionRowSize,
+                            height: StatisticsConstants.collectionRowSize
                         )
                 default:
                     EmptyView()
@@ -70,9 +80,9 @@ struct FavouriteNft: View {
             HStack {
                 Spacer()
                 Button {
-                    likeTapHandler(nft)
+                   // likeTapHandler(nft)
                 } label: {
-                    Image(userLikes.likes.contains(nft.id) ? "likeActive" : "likeNoActive")
+//                    Image(userLikes.likes.contains(nft.id) ? "likeActive" : "likeNoActive")
                 }
             }
         }
@@ -80,7 +90,7 @@ struct FavouriteNft: View {
     
     private var ratingView: some View {
         VStack(alignment: .leading, spacing: 6){
-            Text("\(name)")
+            Text("\(nft.name)")
                 .font(.headline)
             HStack(spacing: 2) {
                        let rating = nft.rating
@@ -89,7 +99,7 @@ struct FavouriteNft: View {
                        }
                       
                    }
-            Text("\(nft.price, specifier: "%.2f") ETH").font(.system(size: 16))
+            Text("ds")
             
         }
 
@@ -100,17 +110,6 @@ struct FavouriteNft: View {
 }
 
 
-
-#Preview {
-    FavouriteNft(name: "Lilo", nft: NftInfo(
-        id: "",
-        name: "",
-        images: [""],
-        rating: 4,
-        price: 1.79
-    ),
-    userLikes: UserLikes(likes: []),
-    userOrders: UserOrders(nfts: []),
-    likeTapHandler: {_ in },
-    cartTapHandler: {_ in})
+#Preview{
+    NftRow(nft: NftInfo.init(id: "1", name: "WD", images: ["String"], rating: 1, price: 2.1))
 }

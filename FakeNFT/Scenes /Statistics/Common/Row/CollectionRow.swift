@@ -42,7 +42,7 @@ struct CollectionRow: View {
     
     private var image: some View {
         ZStack(alignment: .top) {
-           AsyncImage(url: URL(string: nft.images.first ?? "")) { phase in
+            AsyncImage(url: URL(string: nft.images.first ?? "")) { phase in
                 switch phase {
                 case .success(let image):
                     image
@@ -67,7 +67,7 @@ struct CollectionRow: View {
             HStack {
                 Spacer()
                 Button {
-                    likeTapHandler(nft)
+                   // likeTapHandler(nft)
                 } label: {
                     Image(userLikes.likes.contains(nft.id) ? "likeActive" : "likeNoActive")
                 }
