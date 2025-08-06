@@ -1,13 +1,13 @@
 //
-//  ProfileModel.swift
+//  UserData.swift
 //  FakeNFT
 //
-//  Created by Mac on 23.06.2025.
+//  Created by Mac on 06.08.2025.
 //
 
 import SwiftUI
 
-struct UserData: Codable{
+struct UserData: Codable {
     var name: String
     var description: String
     var link: String
