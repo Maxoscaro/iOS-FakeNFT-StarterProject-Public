@@ -36,7 +36,5 @@ final class ServicesAssembly: ObservableObject {
         UserOrdersImpl(networkClient: networkClient)
     }
     
-    var profileService: ProfileService {
-        ProfileServiceImpl(networkClient: networkClient)
-    }
+
 }
