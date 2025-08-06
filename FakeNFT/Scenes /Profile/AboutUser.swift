@@ -9,7 +9,17 @@ import SwiftUI
 
 struct AboutUser: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView{
+            VStack{
+              
+            }  .modifier(NavigationBarStyle(
+                title: "О разработчике",
+                backButtonHidden: false,
+                filterButtonHidden: true,
+                filterButtonTapHandler: {}
+            ))
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

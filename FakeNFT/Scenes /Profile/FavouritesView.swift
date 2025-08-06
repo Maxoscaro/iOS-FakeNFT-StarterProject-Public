@@ -7,29 +7,36 @@
 
 import SwiftUI
 
-
 struct FavouritesView: View {
-    
-    @EnvironmentObject var viewModel: NFTViewModel
+    @EnvironmentObject var viewModel: ProfileViewModel
 
+
+    private let columns = [
+        GridItem(.flexible(), spacing: 8),
+        GridItem(.flexible(), spacing: 8)
+    ]
     
     var body: some View {
         NavigationView {
             VStack{
-                if viewModel.likedNFTs.isEmpty {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .tint(.gray)
+                }
+                else if viewModel.favoritesNfts.isEmpty {
                     Text("Нет избранных NFT")
-                        .font(.headline)
+                        .font(.custom("SFProText-Bold", size: 17))
                         .padding()
                     
                 } else {
                     ScrollView{
-                        LazyVStack(spacing: 12) {
-                            ForEach(viewModel.likedNFTs) { nft in
-                                NFTCardView(nft:nft)
-                                
+                        LazyVGrid(columns: columns, spacing: 12) {
+                            ForEach(viewModel.favoritesNfts) { nft in
+                                FavouriteNft(nft: nft)
                             }
                         }
-                        
+                        .padding()
                     }
                 }
             }
@@ -41,14 +48,11 @@ struct FavouritesView: View {
                 ))
         }
         .navigationBarBackButtonHidden(true)
-        
-
-            
     }
     
 
 }
 
 #Preview {
-    FavouritesView()
+
 }
