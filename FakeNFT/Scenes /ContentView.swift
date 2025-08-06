@@ -10,14 +10,14 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var service: ServicesAssembly
-
+    @StateObject private var cartViewModel = CartViewViewModel()
     @State private var isTabBarHidden = false
     @State private var selectedTab = Tab.profile
     
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
-                ProfileView(profileService: service.profileService, nftsService: service.nftService, likesService: service.likesService)
+                ProfileView()
                     .tag(Tab.profile)
                 
                 Text("Catalog")
@@ -43,6 +43,7 @@ struct ContentView: View {
 }
 
 #Preview {
-
+    ContentView()
+        .environmentObject(ServicesAssembly())
 
 }

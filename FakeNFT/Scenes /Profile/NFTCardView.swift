@@ -8,70 +8,47 @@
 import SwiftUI
 
 struct NFTCardView: View {
-    @EnvironmentObject var viewModel: ProfileViewModel
-    
-    let nft: Nft
-    
+    let nft: NFT
+
     var body: some View {
-        HStack(spacing: 12) {
-            ZStack(alignment: .topTrailing){
-                if let url = URL(string: nft.images.first ?? "") {
-                    AsyncImage(url: url) { image in
-                        image.image?.resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .frame(width: 108, height: 108)
-                    }
-                }
-                // Временное изображение-заглушка
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.gray.opacity(0.2))
-                    .frame(width: 108, height: 108)
-                Button(action: {
-                    viewModel.toggleLike(for: nft)
-                }) {
-                    Image(systemName:"heart.fill")
-                       .foregroundColor(viewModel.isLiked(nft) ? .red : .white)
-                        .padding(8)
-                }
-                .buttonStyle(.plain)
-            }
+        HStack {
+            // Временное изображение-заглушка
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.pink)
+                .frame(width: 108, height: 108)
             
-            VStack(alignment: .leading, spacing: 8) {
+
+            VStack(alignment: .leading) {
                 Text(nft.name)
                     .font(.headline)
-                    .lineLimit(2)
 
-                HStack(spacing: 2) {
+                HStack(spacing: 4) {
                     ForEach(0..<5) { index in
                         Image(systemName: index < nft.rating ? "star.fill" : "star")
-                            .foregroundColor(.yaYellowUniversal)
+                            .foregroundColor(.yellow)
                             .font(.caption)
                     }
                 }
 
                 Text("от Jhon Doe")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    
             }
+            .padding(.leading, 15)
             
+
             Spacer()
-            
-            VStack(alignment: .trailing, spacing: 4) {
+            VStack(alignment: .leading){
                 Text("Цена")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                
                 Text("\(nft.price, specifier: "%.2f") ETH")
                     .font(.headline)
             }
         }
         .padding()
-        .background(Color(.systemBackground))
-       
+        .cornerRadius(12)
     }
-        
 }
 
 #Preview {
-
+    NFTCardView(nft: NFT.init(name: "Q", price: 1.1, rating: 4))
 }

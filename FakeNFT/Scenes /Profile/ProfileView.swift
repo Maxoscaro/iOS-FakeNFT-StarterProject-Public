@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @StateObject var viewModel: ProfileViewModel
-    
+    @StateObject private var viewModel = ProfileViewModel()
+   
     @State private var isPresenting = false
     
-    private let profileService: ProfileService
-    private let nftsService: NftService
-    private let likesService: LikesService
     
-    init(profileService: ProfileService, nftsService: NftService, likesService: LikesService) {
-        self.profileService = profileService
-        self.nftsService = nftsService
-        self.likesService = likesService
-        _viewModel = StateObject(wrappedValue: ProfileViewModel(profileService: profileService, nftsService: nftsService, likesService: likesService))
+    
+    func send(){
+        
+    }
+    var body: some View {
+        
+        content
+        
     }
     
-    var body: some View {
+    var content: some View {
         NavigationView{
             VStack(alignment: .leading) {
                 HStack{
@@ -32,48 +32,49 @@ struct ProfileView: View {
                         isPresenting = true
                     }
                     .foregroundStyle(Color.blackDay)
-                    .frame(width: 42,height: 42)
-                    .font(.system(size: 26, weight: .semibold))
+                                        .frame(width: 42,height: 42)
+                                        .font(.system(size: 26, weight: .semibold))
                     .sheet(isPresented: $isPresenting) {
-                       FullScreenModalView(viewModel: viewModel)
-                        
+                        FullScreenModalView(viewModel: viewModel)
+                            
                     }
+                    
+                   
                 }
                 
                 userInfo
-                
                 Text("\(viewModel.description)")
                     .font(.custom("SFProText-Regular", size: 13))
                     .foregroundStyle(Color.blackDay)
                     .padding(.top)
-                Button(action: { }) {
+                Button(action: send) {
                     Text("\(viewModel.link)")
                         .padding(.top, 6)
                         .padding(.bottom)
-                    
-                }
-                NavigationLink(destination: UserNFT().environmentObject(viewModel)){
-                    NftsButton(nfts: viewModel.nfts.count, name: "Мои NFT")
-                }
-                NavigationLink(destination: FavouritesView().environmentObject(viewModel)) {
-                    NftsButton(nfts: viewModel.favoritesNfts.count, name: "Избранные NFT")
+                        
+                        }
+                NavigationLink(destination: UserNFT()){
+                                    NftsButton(nfts: 122, name: "Мои NFT")
+                                }
+                NavigationLink(destination: Favourites()){
+                    NftsButton(nfts: 11, name: "Избранные NFT")
                 }
                 
                 NavigationLink(destination: AboutUser()){
                     AboutButton(name: "О разработчике")
                 }
+               
+               
                 
+               
                 
                 Spacer()
             }
             .padding(.top, 20)
             .padding(.horizontal)
-            
-            .task {
-                await viewModel.fetchProfile()
-            }
-            
+
         }
+
         
     }
     
@@ -81,8 +82,7 @@ struct ProfileView: View {
     var userInfo: some View {
         
         
-        HStack() {
-
+        HStack(spacing: .zero){
             if let data = viewModel.imageData, let uiImage = UIImage(data: data) {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -108,10 +108,12 @@ struct ProfileView: View {
             Spacer()
         }
         
+        
+
     }
     
 }
 
 #Preview {
-
+    ProfileView()
 }

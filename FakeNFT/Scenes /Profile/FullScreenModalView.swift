@@ -7,10 +7,11 @@
 
 import SwiftUI
 import PhotosUI
-
 struct FullScreenModalView: View {
     
     @ObservedObject var viewModel: ProfileViewModel
+   
+    
 
     @Environment(\.presentationMode) var presentationMode
     @State var description: String = ""
@@ -18,7 +19,9 @@ struct FullScreenModalView: View {
     @State var link: String = ""
     @State private var selectedItem: PhotosPickerItem?
     @State private var tempImageData: Data?
+   
 
+   
     var body: some View {
         HStack{
             Spacer()
@@ -53,7 +56,8 @@ struct FullScreenModalView: View {
                         .overlay(
                             Circle().fill(Color.black.opacity(0.4))
                         )
-                  
+                        
+                    
                 }
                 PhotosPicker(
                     selection: $selectedItem, matching: .images,
@@ -177,6 +181,10 @@ extension View{
 }
 
 #Preview("FullScreenModalView MVVM") {
-  
+    let vm = ProfileViewModel()
+    vm.name = "N"
+    vm.description = "D"
+    vm.link = "L"
+    vm.imageData = UIImage(systemName: "photo")?.jpegData(compressionQuality: 1.0)
+    return FullScreenModalView(viewModel: vm)
 }
-
