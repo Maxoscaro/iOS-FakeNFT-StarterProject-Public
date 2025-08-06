@@ -276,7 +276,6 @@
 				79D0C75A2DE39E1100D53241 /* Constants */,
 				3F6806A429CBBAF200B4F915 /* Info.plist */,
 				5019A4CD2DE1E899009A5AF8 /* FakeNftApp.swift */,
-				79D0C74F2DE393F600D53241 /* Docs */,
 			);
 			path = FakeNFT;
 			sourceTree = "<group>";
@@ -308,6 +307,7 @@
 				796CB7A12DF4658D0028631B /* LikesService.swift */,
 				796CB7A72DF474330028631B /* UserOrdersService.swift */,
 				0CFCB73F2A78002A0009A829 /* ExamplePutService.swift */,
+				79D0C74F2DE393F600D53241 /* Docs */,
 				4BEC7A542E32B058000B5DAF /* ProfileService.swift */,
 			);
 			path = Services;
