@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var service: ServicesAssembly
-    
+
     @State private var isTabBarHidden = false
     @State private var selectedTab = Tab.profile
     
@@ -23,8 +23,9 @@ struct ContentView: View {
                 Text("Catalog")
                     .tag(Tab.catalog)
                 
-                Text("Cart")
-                    .tag(Tab.catalog)
+                CartView(isTabBarHidden: $isTabBarHidden, selectedTab: $selectedTab)
+                    .tag(Tab.cart)
+                    .environmentObject(cartViewModel)
                 
                 RatingView(
                     viewModel: RatingViewModel(usersService: service.usersService),
@@ -32,13 +33,16 @@ struct ContentView: View {
                 )
                     .tag(Tab.statistics)
             }
+           
             if !isTabBarHidden {
                 TabBarView(selectedTab: $selectedTab)
+                    .blur(radius: cartViewModel.showDeleteConfirmation ? 12 : 0)
             }
         }
     }
 }
 
 #Preview {
+
 
 }
